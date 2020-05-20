@@ -1,0 +1,71 @@
+.caruske {
+    width: 100%;
+    padding: 100px 50px;
+    margin: auto;
+    background: yellow;
+    position: relative;
+    height: 100vh;
+}
+.caruske-container {
+    width: 300px;
+    height: 300px;
+    background-color: red;
+    position: absolute;
+    left: 40%;
+    overflow: hidden;
+    z-index: 1;
+}
+.caruske-content {
+    width: 10000px;
+    height: 150px;
+    background-color: blue;
+    display: flex;
+    position: absolute;
+    top: 25%;
+    left: -300px;
+}
+.slides {
+    width: 300px;
+    height: 150px;
+    /* display: inline-block; */
+}
+.slides.green {
+    background-color: green;
+}
+.slides.purple {
+    background-color: purple;
+}
+.slides.magenta {
+    background-color: magenta;
+}
+
+
+
+
+
+
+
+
+
+
+.slider-dots {
+    width: 100%;
+    padding: 20px 0;
+    position: absolute;
+    top: 35%;
+    left: 46%;
+    z-index: 2;
+}
+    .slider-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 5px;
+        background-color: #D6D6D6;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .slider-dot:hover {
+        background-color: #869791;
+    }
+    
