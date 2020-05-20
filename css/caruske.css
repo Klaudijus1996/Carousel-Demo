@@ -3,14 +3,14 @@
     padding: 100px 50px;
     margin: auto;
     background: yellow;
-    position: relative;
+    /* position: relative; */
     height: 100vh;
 }
 .caruske-container {
     width: 300px;
     height: 300px;
     background-color: red;
-    position: absolute;
+    /* position: absolute; */
     left: 40%;
     overflow: hidden;
     z-index: 1;
@@ -20,9 +20,10 @@
     height: 150px;
     background-color: blue;
     display: flex;
-    position: absolute;
+    /* position: absolute; */
     top: 25%;
-    left: -300px;
+    /* left: -300px; */
+    /* left: -${caruska-width}; */
 }
 .slides {
     width: 300px;

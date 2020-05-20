@@ -28,6 +28,61 @@ function slide(wrapper, itemai, prev, next) {
     itemai.appendChild(cloneFirst);
     itemai.insertBefore(cloneLast, firstSlide);
 
-    //itemai.appendChild(cloneFirst);
-    //itemai.insertBefore(cloneLast, firstSlide);
+    wrapper.classList.add('loaded');
+
+    itemai.onmousedown = dragStart;
+
+    itemai.addEventListener('touchstart', dragStart);
+    itemai.addEventListener('touchend', dragEnd);
+    itemai.addEventListener('touchmove', dragAction);
+
+    prev.addEventListener('click', function() {shiftSlide(-1)});
+    prev.addEventListener('click', function() {shiftSlide(1)});
+
+
+    function dragStart(e) {
+        e = e || window.event;
+        e.preventDefault();
+        posInitial = itemai.offsetLeft;
+        if ( e.type == 'touchstart' ) {
+            posX1 = e.touches[0].clientX;
+        } else {
+            posX1 = e.clientX;
+            document.onmouseup = dragEnd;
+            document.onmousedown = dragAction;
+        }
+    }
+
+    function dragEnd(e) {
+        posFinal = itemai.offsetLeft;
+        if (posFinal - posInitial < -threshold) {
+            shiftSlide(1, 'drag');
+        } else if (posFinal - posInitial > threshold) {
+            shiftSlide(-1, 'drag');
+        } else {
+            itemai.style.left = (posInitial) + "px";
+        }
+
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+
+
+    function dragAction (e) {
+        e = e || window.event;
+
+        if ( e.type == 'touchmove' ) {
+            posX2 = posX1 - e.touches[0].clientX
+            posX1 = e.touches[0].clientX
+        } else {
+            posX2 = posX1 - e.clientX;
+            posX1 = e.clientX;
+        }
+        //itemai.style.left = (itemai.offsetLeft - posX2) + 'px0;'
+        itemai.style.left = (itemai.offsetLeft - posX2) + 'px';
+    }
+
+
+
+
 }
