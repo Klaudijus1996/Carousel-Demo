@@ -1,13 +1,9 @@
 'use strict';
 
-let slides = document.querySelector('.caruske');
-let sliderItems = document.querySelector('.caruske-content');
-let prev = document.getElementById('prev');
-let next = document.getElementById('next');
-
-slide(slides, sliderItems, prev, next); 
-
-//setTimeout(function(){ slide(slides, sliderItems, prev, next); }, 3000);
+let slides = document.querySelector('.slider'),
+    sliderItems = document.querySelector('.slides'),
+    prev = document.getElementById('prev'),
+    next = document.getElementById('next');
 
 function slide(wrapper, itemai, prev, next) {
     let posX1 = 0,
@@ -15,9 +11,9 @@ function slide(wrapper, itemai, prev, next) {
         posInitial,
         posFinal,
         threshold = 100,
-        slides = itemai.querySelectorAll('.slides'),
+        slides = itemai.querySelectorAll('.slide'),
         slidesLength = slides.length,
-        slideSize = itemai.querySelectorAll('.slides')[0].offsetWidth,
+        slideSize = itemai.querySelectorAll('.slide')[0].offsetWidth,
         firstSlide = slides[0],
         lastSlide = slides[slidesLength - 1],
         cloneFirst = firstSlide.cloneNode(true),
@@ -39,6 +35,7 @@ function slide(wrapper, itemai, prev, next) {
     prev.addEventListener('click', function() {shiftSlide(-1)});
     prev.addEventListener('click', function() {shiftSlide(1)});
 
+    itemai.addEventListener('transitionend', checkIndex);
 
     function dragStart(e) {
         e = e || window.event;
@@ -53,6 +50,22 @@ function slide(wrapper, itemai, prev, next) {
         }
     }
 
+    
+    
+    function dragAction (e) {
+        e = e || window.event;
+        
+        if ( e.type == 'touchmove' ) {
+            posX2 = posX1 - e.touches[0].clientX
+            posX1 = e.touches[0].clientX
+        } else {
+            posX2 = posX1 - e.clientX;
+            posX1 = e.clientX;
+        }
+        //itemai.style.left = (itemai.offsetLeft - posX2) + 'px0;'
+        itemai.style.left = (itemai.offsetLeft - posX2) + 'px';
+    }
+    
     function dragEnd(e) {
         posFinal = itemai.offsetLeft;
         if (posFinal - posInitial < -threshold) {
@@ -66,23 +79,37 @@ function slide(wrapper, itemai, prev, next) {
         document.onmouseup = null;
         document.onmousemove = null;
     }
+    
+    function shiftSlide(dir, action) {
+        itemai.classList.add('shifting');
 
+        if ( allowShift ) {
+            if (!action) { posInitial = itemai.offsetLeft; }
 
-    function dragAction (e) {
-        e = e || window.event;
-
-        if ( e.type == 'touchmove' ) {
-            posX2 = posX1 - e.touches[0].clientX
-            posX1 = e.touches[0].clientX
-        } else {
-            posX2 = posX1 - e.clientX;
-            posX1 = e.clientX;
-        }
-        //itemai.style.left = (itemai.offsetLeft - posX2) + 'px0;'
-        itemai.style.left = (itemai.offsetLeft - posX2) + 'px';
+            if (dir == 1) {
+                itemai.style.left = (posInitial - slideSize) + 'px';
+                index++;
+            } else if (dir == -1) {
+                itemai.style.left = (posInitial + slideSize) + 'px';
+                index--;
+            }
+        };
+        allowShift = false;
     }
 
+    function checkIndex() {
+        itemai.classList.remove('shifting');
 
-
-
+        if (index == -1) {
+            itemai.style.left = -(slidesLength * slideSize) + 'px';
+            index = slidesLength - 1;
+        }
+        if (index == slidesLength) {
+            itemai.style.left = -(1*slideSize) + 'px';
+            index = 0;
+        }
+        allowShift = true;
+    }
 }
+
+slide(slides, sliderItems, prev, next); 
