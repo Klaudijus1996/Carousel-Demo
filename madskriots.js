@@ -21,9 +21,6 @@ function createSlide(className, nodeText) {
     return slide;
 }
 
-//document.getElementById('kurtas3').innerHTML = 'Pakeiciau';
-
-//sliderItems.removeChild(document.getElementById('kurtas5'));
 
 function slide(wrapper, items, prev, next) {
   var posX1 = 0,
@@ -42,9 +39,6 @@ function slide(wrapper, items, prev, next) {
       index = 0,
       allowShift = true;
   
-  // Clone first and last slide
-  //items.appendChild(cloneFirst);
-  //items.insertBefore(cloneLast, lastSlide);
 
   for (let i = 0; i < kiekPrasuktRatuku; i++) {
     let naujasZalias = greenSlide.cloneNode(true);
@@ -84,10 +78,18 @@ function slide(wrapper, items, prev, next) {
   // Transition events
   items.addEventListener('transitionend', checkIndex);
 
-  
+
+  let initSlides = setInterval(function(){shiftSlide(1);}, 1500);
+  $('#slides').mouseover(function(){
+    clearInterval(initSlides);
+  }).mouseout(function(){
+    initSlides = setInterval(function(){shiftSlide(1);}, 1500);
+  })
+
   items.style.transition = 'all 1s';
 
-  setInterval(function() { shiftSlide(1);}, 1500);
+
+
   
   function dragStart (e) {
     e = e || window.event;
