@@ -31,6 +31,10 @@
 		position: relative;
 		top: 0;
 		width: 99999px;
+		transition: 1s;
+	}
+	.slides:hover {
+		transition: inherit;
 	}
 	.slides.shifting {
 		transition: left 0.8s ease-out;

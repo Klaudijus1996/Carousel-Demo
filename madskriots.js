@@ -86,7 +86,7 @@ function slide(wrapper, items, prev, next) {
     initSlides = setInterval(function(){shiftSlide(1);}, 1500);
   })
 
-  items.style.transition = 'all 1s';
+  // items.style.transition = 'all 1s';
 
 
 
